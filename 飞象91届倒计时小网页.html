@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>飞象第91届 · 开会倒计时</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #B81C22;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+  }
+  .tag {
+    background: #fff;
+    color: #B81C22;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 6px 16px;
+    border-radius: 999px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+  h1 { font-size: 30px; line-height: 1.4; margin-bottom: 8px; }
+  .sub { font-size: 16px; opacity: .92; margin-bottom: 32px; }
+  .count { display: flex; gap: 12px; margin-bottom: 32px; }
+  .cell {
+    background: rgba(255,255,255,.14);
+    border: 1px solid rgba(255,255,255,.35);
+    border-radius: 14px;
+    width: 76px;
+    padding: 14px 0 10px;
+  }
+  .cell b { display: block; font-size: 34px; line-height: 1; }
+  .cell span { font-size: 12px; opacity: .85; }
+  .card {
+    background: #fff;
+    color: #595757;
+    border-radius: 16px;
+    padding: 20px 22px;
+    max-width: 420px;
+    width: 100%;
+    text-align: left;
+  }
+  .card h2 { color: #B81C22; font-size: 19px; margin-bottom: 6px; }
+  .card .bio { font-size: 13px; color: #888; margin-bottom: 10px; }
+  .card .theme { font-size: 16px; font-weight: 700; color: #222; margin-bottom: 10px; line-height: 1.5; }
+  .card ul { font-size: 14px; line-height: 1.8; padding-left: 18px; }
+  .btn {
+    margin-top: 20px;
+    background: #fff;
+    color: #B81C22;
+    border: none;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 12px 28px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .foot { margin-top: 28px; font-size: 13px; opacity: .8; }
+</style>
+</head>
+<body>
+  <div class="tag">飞象新零售俱乐部</div>
+  <h1>飞象第91届私域+视频号展会<br>暨首届AI电商大会</h1>
+  <div class="sub">2026年11月23—24日 · 杭州太虚湖假日酒店</div>
+
+  <div class="count">
+    <div class="cell"><b id="d">--</b><span>天</span></div>
+    <div class="cell"><b id="h">--</b><span>小时</span></div>
+    <div class="cell"><b id="m">--</b><span>分钟</span></div>
+    <div class="cell"><b id="s">--</b><span>秒</span></div>
+  </div>
+
+  <div class="card">
+    <h2 id="gName">吕游</h2>
+    <div class="bio" id="gBio">私域增长专家 / 企业私域战略顾问</div>
+    <div class="theme" id="gTheme">500人私域团队，如何用AI减到20人？</div>
+    <ul id="gPoints"></ul>
+  </div>
+
+  <button class="btn" onclick="nextGuest()">换一位嘉宾看看</button>
+  <div class="foot">以前500人私域团队干的活，现在20人就能干完？11月23~24号，杭州太虚湖假日酒店不见不散～</div>
+
+<script>
+  var guests = [
+    {
+      name: "吕游",
+      bio: "私域增长专家 / 企业私域战略顾问",
+      theme: "500人私域团队，如何用AI减到20人？",
+      points: ["公域给平台打工，利润怎么拿回私域", "私域哪些活，先交给AI干", "人少了，业绩怎么还能接着涨"]
+    },
+    {
+      name: "张勇",
+      bio: "疯狂小杨哥切片创始人兼操盘手",
+      theme: "切片业务百亿营收，如何用AI切片帮品牌和达人做增量？",
+      points: ["全域素材，如何用AI切成直播", "抖快、视频号、淘宝，切片怎么播", "品牌和达人，如何用切片做增量"]
+    }
+  ];
+  var idx = 0;
+  function render() {
+    var g = guests[idx];
+    document.getElementById("gName").textContent = g.name;
+    document.getElementById("gBio").textContent = g.bio;
+    document.getElementById("gTheme").textContent = g.theme;
+    document.getElementById("gPoints").innerHTML = g.points.map(function(p){ return "<li>" + p + "</li>"; }).join("");
+  }
+  function nextGuest() { idx = (idx + 1) % guests.length; render(); }
+  function tick() {
+    var target = new Date("2026-11-23T00:00:00+08:00").getTime();
+    var diff = Math.max(0, target - Date.now());
+    var days = Math.floor(diff / 86400000);
+    var hrs = Math.floor(diff % 86400000 / 3600000);
+    var min = Math.floor(diff % 3600000 / 60000);
+    var sec = Math.floor(diff % 60000 / 1000);
+    document.getElementById("d").textContent = days;
+    document.getElementById("h").textContent = String(hrs).padStart(2, "0");
+    document.getElementById("m").textContent = String(min).padStart(2, "0");
+    document.getElementById("s").textContent = String(sec).padStart(2, "0");
+  }
+  render();
+  tick();
+  setInterval(tick, 1000);
+</script>
+</body>
+</html>
